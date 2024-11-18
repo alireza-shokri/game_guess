@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @font-face {
+            font-family: 'ravi_bold';
+            src: url("info/Ravi-Bold.ttf") format('truetype'),
+        }
+         body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color:rgb(12, 12, 32);
+            clip-path: circle(18.3rem);
+            font-family: ravi_bold;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .conteniar{
+            width: 36rem;
+            padding: 0 0.5rem;
+            background-color: rgba(24, 62, 63, 0.432);
+            border: 0.15rem solid orange;
+        }
+        .titile{
+            text-align: center;
+            padding: 1rem;
+            color: orangered;
+        }
+        .parent_again_boxShow{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 3rem;
+        }
+        .box_show_number{
+            width: 4rem;
+            height:3.5rem;
+            border-radius: 1rem;
+            background-color: rgba(18, 179, 152, 0.384);
+            text-align: center;
+            line-height: 4.5rem;
+        }
+        .box_show_number p{
+            font-size:3rem;
+            color: wheat;
+        }
+        .again{
+            border:0;
+            outline: 0;
+            width: 4rem;
+            height: 3rem;
+            font-size: 1.05rem;
+            border-radius: 0.2rem;
+            background-color: rgba(0, 255, 0, 0.555);
+            cursor: pointer;
+            font-family: 'ravi_bold';
+        }
+        .again:hover{
+            background-color: green;
+            transform: scale(0.97);
+        }
+        .box_poll{
+            width: 100%;
+            height: 5rem;
+            margin: 1.5rem auto;
+            background-color: rgb(1, 87, 99);
+            border-radius: 0.3rem;
+            position: relative;
+        }
+        #img_fish{
+           width: 4rem;
+           height: 4.7rem;
+            position: absolute;
+            right: 0;
+        }
+       .clas_naimat{
+            animation: animatFish 5s linear ,
+            aniant_charkh 1.5s linear infinite;
+       }
+        .main{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        .left{
+            flex-basis: 50%;
+            text-align: center;
+            height: 8rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .input_number{
+            width: 10rem;
+            padding: 0.8rem;
+            font-size: 1.2rem;
+            outline: 0;
+            border-radius: 0.4rem;
+            border: 0.15rem solid orangered;
+        }
+        .click{
+            width: 5rem;
+            border:0;
+            outline: 0;
+            border-radius: 0.2rem;
+            padding: 0.5rem;
+            background-color:rgba(9, 102, 156, 0.514);
+            font-size: 1rem;
+            font-family: 'ravi_bold';
+            cursor: pointer;
+            color: wheat;
+        }
+        .click:hover{
+            background-color: rgb(22, 22, 180);
+            transform: scale(0.97);
+        }
+        .right{
+            flex-basis: 50%;
+            height: 10rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            color: rgba(255, 255, 0, 0.842);
+        }
+        .score ,.alarm{
+            font-size: 1.4rem;
+        }
+        @keyframes aniant_charkh {
+            0%,100%{
+                transform: rotate(1deg)
+            }
+            50%{
+                transform: rotate(8deg)
+            }
+        }
+        @keyframes animatFish {
+            0%{
+                right: 0;
+                transform: translateY(-10px) 
+            }
+          35%{
+            right: 40%;
+            transform:translateY(20px) 
+          }  
+          90%{
+            right: 90%;
+            transform:translateY(5px);
+          }
+        }
+    </style>
+    <title>game geas</title>
+</head>
+<body>
+    <div class="conteniar">
+        <h2 class="titile"> ...حدس عدد    </h2>
+        <div class="parent_again_boxShow">
+            <button class="again">دوباره</button>
+            <div class="box_show_number"><p>?</p></div>
+        </div>
+            <div class="box_poll">
+                <img src="info/icone_fish.png" alt="img fish" id="img_fish">
+                <span class="number_box"></span>
+            </div>
+        <main class="main">
+            <div class="left">
+                <input type="number" class="input_number" autofocus>
+                <button class="click"> تست کن</button>
+            </div>
+            <div class="right">
+                <h4 class="alarm"> عددی بین  1, 99 وارد کنید</h4>
+                <p class="score">فرصت :8</p>
+            </div>
+        </main>
+    </div>
+    <script>
+        const $=document;
+        const btn_click=$.querySelector('.click');
+        const inputElem=$.querySelector('.input_number');
+        const alarm=$.querySelector('.alarm');
+        const again=$.querySelector('.again')
+        let randomNum=Math.floor(Math.random()*100);
+        let score=8;
+        const regex=/^[1-9][0-9]?$/
+        function scoreType(score){
+             $.querySelector('.score').textContent=`فرصت :${score}`
+        }
+        function start(){
+            let number_inputElm=Number(inputElem.value)
+           if(randomNum ==  number_inputElm){
+               alarm .textContent='باریکلا برنده  شدیا😁';
+               $.querySelector('.box_show_number p').textContent=randomNum;
+                $.querySelector('#img_fish').classList.add('clas_naimat');
+                btn_click.disabled=true;
+                $.querySelector('#img_fish').addEventListener('animationend',()=> {
+                    $.querySelector('#img_fish').classList.remove('clas_naimat')
+                })
+                score--;
+           }
+           else{
+                if ( number_inputElm < randomNum)
+                    alarm .textContent='... کم گفتی حاجی'
+                else  alarm .textContent= '...زیاد گفتی حاجی'
+                score--;
+            if(score ==0 ){
+                $.querySelector('.box_show_number p').textContent=randomNum;
+                alarm.textContent='🤣 حاجی باختی '
+            }
+        }
+            scoreType(score);
+            inputElem.value='';
+            inputElem.focus()
+        }
+        function cheak(){
+            if(score>0)
+                regex.test(inputElem.value)? start(): alarm.textContent='😐 هوی عددت کو';   
+        }
+        function reset(){
+            alarm.textContent='عددی بین 1, 99 وارد کنید';
+            btn_click.disabled=false;
+            $.querySelector('.box_show_number p').textContent='?';
+            score=8;
+            scoreType(score);
+            randomNum=Math.floor(Math.random()*100);
+            
+            inputElem.value='';
+        }
+        again.addEventListener('click',reset)
+        btn_click.addEventListener('click',cheak)
+        inputElem.addEventListener('keyup',function(e){
+          (e.keyCode==13)?cheak():false;
+        })
+    </script>
+</body>
+</html>
